@@ -13,8 +13,10 @@ from wandb_utils.log_artifact import log_artifact
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
 
-
-def go(args):
+'''
+go
+'''
+def go(args:any)->None:
 
     run = wandb.init(job_type="train_val_test_split")
     run.config.update(args)
@@ -56,15 +58,25 @@ if __name__ == "__main__":
     parser.add_argument("input", type=str, help="Input artifact to split")
 
     parser.add_argument(
-        "test_size", type=float, help="Size of the test split. Fraction of the dataset, or number of items"
+        "test_size",
+        type=float,
+        help="Size of the test split. Fraction of the dataset, or number of items"
     )
 
     parser.add_argument(
-        "--random_seed", type=int, help="Seed for random number generator", default=42, required=False
+        "--random_seed",
+        type=int,
+        help="Seed for random number generator",
+        default=42,
+        required=False
     )
 
     parser.add_argument(
-        "--stratify_by", type=str, help="Column to use for stratification", default='none', required=False
+        "--stratify_by",
+        type=str,
+        help="Column to use for stratification",
+        default='none',
+        required=False,
     )
 
     args = parser.parse_args()

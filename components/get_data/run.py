@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
 
 
-def go(args):
+def go(args:any):
 
     run = wandb.init(job_type="download_file")
     run.config.update(args)

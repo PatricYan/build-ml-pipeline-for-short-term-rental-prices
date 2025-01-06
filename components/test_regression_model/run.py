@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """
-This step takes the best model, tagged with the "prod" tag, and tests it against the test dataset
+This step takes the best model, tagged with the "prod" tag,
+and tests it against the test dataset
 """
 import argparse
 import logging
@@ -9,20 +10,21 @@ import mlflow
 import pandas as pd
 from sklearn.metrics import mean_absolute_error
 
-from wandb_utils.log_artifact import log_artifact
+# from wandb_utils.log_artifact import log_artifact
 
-
-logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
+logging.basicConfig(filename="test.log",
+                    level=logging.INFO,
+                    format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
 
 
-def go(args):
-
+def go(args: any)->None:
     run = wandb.init(job_type="test_model")
     run.config.update(args)
 
     logger.info("Downloading artifacts")
-    # Download input artifact. This will also log that this script is using this
+    # Download input artifact.
+    # This will also log that this script is using this
     # particular version of the artifact
     model_local_path = run.use_artifact(args.mlflow_model).download()
 
@@ -52,18 +54,19 @@ def go(args):
 
 if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser(description="Test the provided model against the test dataset")
+    parser = argparse.ArgumentParser(
+        description="Test the provided model against the test dataset")
 
     parser.add_argument(
         "--mlflow_model",
-        type=str, 
+        type=str,
         help="Input MLFlow model",
         required=True
     )
 
     parser.add_argument(
         "--test_dataset",
-        type=str, 
+        type=str,
         help="Test dataset",
         required=True
     )
